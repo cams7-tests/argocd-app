@@ -28,13 +28,12 @@ jobs:
       - name: kustomize
         uses: imranismail/setup-kustomize@v1
         with:
-          kustomize_version: v3.6.1
+          kustomize-version: v3.6.1
 
       - name: update k8s
         run: |
           cd k8s
           kustomize edit set image cams7/argocd-app=cams7/argocd-app:${{ github.sha }}
-          cat kustomize.yaml
 
       - name: commit
         run: |
