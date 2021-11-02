@@ -16,5 +16,5 @@ jobs:
           username: cams7
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: cams7/argocd-app
-          tags: latest
+          tags: ${{ github.sha }}, latest
           
