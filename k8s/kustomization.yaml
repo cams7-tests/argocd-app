@@ -18,4 +18,4 @@ namePrefix: argocd-app-
 images:
 - name: cams7/argocd-app
   newName: cams7/argocd-app
-  newTag: 7231cf26a45778ad852dde8536cdcf7d1ff85677
+  newTag: cb11d34c2d0c805e0d80aa3f075bce118aa4d257
