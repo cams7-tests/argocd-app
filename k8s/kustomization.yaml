@@ -14,6 +14,6 @@ namePrefix: argocd-app-
 
 images:
 - name: cams7/argocd-app
-  newTag: 0.0.1
+  newTag: latest
 
 
