@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`dev.cams7.ml`) && PathPrefix(`/argocd-app`)
+      kind: Rule
+      middlewares:
+        - name: argocd-app-redirect-scheme  
+      services:
+        - name: argocd-app-svc
+          port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dev.cams7.ml`) && PathPrefix(`/argocd-app`)
+      kind: Rule
+      services:
+        - name: argocd-app-svc
+          port: 8080
+  tls:
+    secretName: dev.cams7.ml

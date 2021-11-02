@@ -1,0 +1,19 @@
+resources:
+- service.yaml
+- deployment.yaml
+- middleware-redirect-scheme.yaml
+- route.yaml
+
+namespace: argocd-app
+
+commonLabels:
+  env: dev
+  app: argocd-app
+
+namePrefix: argocd-app-
+
+images:
+- name: cams7/argocd-app
+  newTag: 0.0.1
+
+

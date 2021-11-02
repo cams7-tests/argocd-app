@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: argocd-app
+        image: cams7/argocd-app
+        ports:
+        - containerPort: 8080
