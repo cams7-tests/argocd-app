@@ -7,13 +7,14 @@ resources:
 namespace: argocd-app
 
 commonLabels:
-  env: dev
   app: argocd-app
+  env: dev
 
 namePrefix: argocd-app-
 
 images:
 - name: cams7/argocd-app
-  newTag: latest
-
-
+  newName: cams7/argocd-app
+  newTag: 370e322c6781f5759f3ded640d17d0df011126cf
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
