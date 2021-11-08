@@ -14,3 +14,4 @@ commonLabels:
   env: dev
 
 namePrefix: argocd-app-
+
