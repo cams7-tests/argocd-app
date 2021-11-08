@@ -5,13 +5,13 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
-#    runs-on: self-hosted
+#    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: show some info
+      - name: Show SO info
         run: |
           echo Show hostname:
           cat /etc/hostname
@@ -46,54 +46,45 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      
+      - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: cams7/argocd-app:${{ github.sha }}, cams7/argocd-app:latest
 
-#      - name: build image and push to docker hub
-#        uses: docker/build-push-action@v1.1.0
-#        with:
-#          username: cams7
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#          repository: cams7/argocd-app
-#          tags: ${{ github.sha }}, latest
-
-
-
   deploy:
     name: Deploy
     runs-on: ubuntu-20.04
     needs: build
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: kustomize
+      - name: Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: v3.6.1
 
-      - name: update k8s
+      - name: Update k8s
         run: |
           cd k8s
           kustomize edit set image cams7/argocd-app=cams7/argocd-app:${{ github.sha }}
 
-      - name: commit
+      - name: Commit
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Deploy Action"
           git commit -am "Change image tag"
 
-      - name : push
+      - name : Push
         uses: ad-m/github-push-action@master
 
         
