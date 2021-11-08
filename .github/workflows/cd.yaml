@@ -29,6 +29,7 @@ jobs:
           echo
           echo Show all files in work directory:
           ls -hal /home/github/_work
+
           echo
           echo Show all files current directory:
           ls -hal
