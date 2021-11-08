@@ -22,7 +22,7 @@ jobs:
 #          username: ${{ secrets.DOCKERHUB_USERNAME }}
 #          password: ${{ secrets.DOCKERHUB_TOKEN }}
         with:
-          registry: nexus.cams7.ml
+          registry: private.nexus.cams7.ml
           username: admin
           password: abc12345
       
