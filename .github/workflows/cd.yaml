@@ -5,7 +5,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -24,13 +24,7 @@ jobs:
           echo Show current directory:
           pwd
           echo
-          echo Show all files in home directory:
-          ls -hal /home/github
-          echo
-          echo Show all files in work directory:
-          ls -hal /home/github/_work
-
-          echo
+          
           echo Show all files current directory:
           ls -hal
           echo
