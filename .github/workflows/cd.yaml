@@ -21,10 +21,15 @@ jobs:
           echo Show username:
           whoami
           echo
+          echo Show all files in home directory:
+          ls -hal $HOME
+          echo
+          echo Show all files in work directory:
+          ls -hal $HOME/work
+          echo
           echo Show current directory:
           pwd
-          echo
-          
+          echo          
           echo Show all files current directory:
           ls -hal
           echo
