@@ -10,36 +10,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Show SO info
-        run: |
-          echo Show hostname:
-          cat /etc/hostname
-          echo
-          echo Show linux release:
-          cat /etc/os-release
-          echo
-          echo Show username:
-          whoami
-          echo
-          echo Show all files in home directory:
-          ls -hal $HOME
-          echo
-          echo Show all files in work directory:
-          ls -hal $HOME/_work
-          echo
-          echo Show current directory:
-          pwd
-          echo          
-          echo Show all files current directory:
-          ls -hal
-          echo
-          echo Show Git version:
-          git --version
-          echo
-          echo Show all environment variables:
-          printenv
-          echo
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -61,7 +31,6 @@ jobs:
 
   deploy:
     name: Deploy
-#    runs-on: ubuntu-20.04
     runs-on: self-hosted
     needs: build
     steps:
