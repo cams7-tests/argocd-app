@@ -26,7 +26,7 @@ jobs:
           ls -hal $HOME
           echo
           echo Show all files in work directory:
-          ls -hal $HOME/_work
+          ls -hal $HOME/work
           echo
           echo Show current directory:
           pwd
