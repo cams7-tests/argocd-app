@@ -4,10 +4,16 @@ metadata:
   name: deploy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      env: dev
   template:
+    metadata:
+      labels:
+        env: dev
     spec:
       containers:
       - name: argocd-app
-        image: cams7/argocd-app
+        image: public.nexus.cams7.ml/argocd-app
         ports:
         - containerPort: 8080
