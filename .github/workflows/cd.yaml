@@ -10,6 +10,36 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: show some info
+        run: |
+          echo Show hostname:
+          cat /etc/hostname
+          echo
+          echo Show linux release:
+          cat /etc/os-release
+          echo
+          echo Show username:
+          whoami
+          echo
+          echo Show current directory:
+          pwd
+          echo
+          echo Show all files in home directory:
+          ls -hal /home/github
+          echo
+          echo Show all files in work directory:
+          ls -hal /home/github/_work
+          echo
+          echo Show all files current directory:
+          ls -hal
+          echo
+          echo Show Git version:
+          git --version
+          echo
+          echo Show all environment variables:
+          printenv
+          echo
+
       - name: build image and push to docker hub
         uses: docker/build-push-action@v1.1.0
         with:
