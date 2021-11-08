@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: cams7/argocd-app:latest
+          tags: cams7/argocd-app:${{ github.sha }}, cams7/argocd-app:latest
 
 #      - name: build image and push to docker hub
 #        uses: docker/build-push-action@v1.1.0
