@@ -18,8 +18,8 @@ jobs:
       - name: Build App
         run: CGO_ENABLED=0 go build -o server main.go
 
-      - name: Test App
-        run: go test -v ./...
+#      - name: Test App
+#        run: go test -v ./...
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
