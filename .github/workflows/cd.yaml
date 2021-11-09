@@ -19,7 +19,8 @@ jobs:
         run: go test -v ./...
 
       - name: Build App
-        run: CGO_ENABLED=0 go build -o server main.go
+#        run: CGO_ENABLED=0 go build -o server main.go
+        run: go build -o server main.go
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,6 +43,9 @@ jobs:
           tags: |
             private.nexus.cams7.ml/argocd-app:${{ github.sha }} 
             private.nexus.cams7.ml/argocd-app:latest
+
+      - name: Remove Go generated binary file 
+        run: rm server
 
   deploy:
     name: Deploy
