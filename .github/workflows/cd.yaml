@@ -33,6 +33,11 @@ jobs:
           registry: private.nexus.cams7.ml
           username: ${{ secrets.NEXUS_USERNAME }}
           password: ${{ secrets.NEXUS_TOKEN }}
+
+      - name: Show files in current diretory
+        run: |
+          pwd
+          ls -hal
       
       - name: Build and push
         id: docker_build
