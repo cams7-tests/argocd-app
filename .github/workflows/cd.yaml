@@ -3,8 +3,8 @@ on:
   push:
     branches: [main]
 jobs:
-  build:
-    name: Build
+  buildApp:
+    name: Build App
     runs-on: self-hosted
     steps:
       - name: Checkout App
@@ -15,12 +15,19 @@ jobs:
         with:
           go-version: 1.17
 
-      - name: Build App
+      - name: Build Go App
         run: CGO_ENABLED=0 go build -o server main.go
-        id: go_build_app
 
 #      - name: Test App
 #        run: go test -v ./...
+
+  createDockerImage:
+    name: Create Docker image
+    runs-on: self-hosted
+    needs: buildApp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,21 +49,19 @@ jobs:
       
       - name: Build and push
         uses: docker/build-push-action@v2
-        if: steps.go_build_app.outputs.conclusion == 'success'
         with:
           push: true
           tags: |
             private.nexus.cams7.ml/argocd-app:${{ github.sha }} 
             private.nexus.cams7.ml/argocd-app:latest
 
-      - name: Remove Go generated binary file 
-        if: steps.go_build_app.outputs.conclusion == 'success'
+      - name: Remove Go generated binary file
         run: rm server
 
-  deploy:
-    name: Deploy
+  updateK8s:
+    name: Update K8s
     runs-on: self-hosted
-    needs: build
+    needs: createDockerImage
     steps:
       - name: Checkout
         uses: actions/checkout@v2
