@@ -17,7 +17,7 @@ jobs:
 
       - name: Build App
         run: CGO_ENABLED=0 go build -o server main.go
-        id: go_build_app
+        id: build-app
 
 #      - name: Test App
 #        run: go test -v ./...
@@ -42,7 +42,7 @@ jobs:
       
       - name: Build and push
         uses: docker/build-push-action@v2
-        if: steps.go_build_app.outputs.conclusion == 'success'
+        if: steps.build-app.outputs.conclusion == 'success'
         with:
           push: true
           tags: |
@@ -50,7 +50,7 @@ jobs:
             private.nexus.cams7.ml/argocd-app:latest
 
       - name: Remove Go generated binary file 
-        if: steps.go_build_app.outputs.conclusion == 'success'
+        if: steps.build-app.outputs.conclusion == 'success'
         run: rm server
 
   deploy:
