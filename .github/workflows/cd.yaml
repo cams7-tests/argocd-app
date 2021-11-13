@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  build-go:
-    name: Build Go
+  build:
+    name: Build
     runs-on: self-hosted   
     
     steps:
@@ -24,19 +24,30 @@ jobs:
 #        env:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - id: setup-up-go
-        name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.17
 
       - id: build-go
         name: Build Go
-        run: CGO_ENABLED=0 go build -o server main.go
+        uses: ./.github/workflows/build-go/
+        with:
+          built-file: server
+          go-file: main.go
+
+      - run: echo status ${{ steps['build-go'].outputs.status }}
+        shell: bash
+
+#      - id: setup-up-go
+#        name: Set up Go
+#        uses: actions/setup-go@v2
+#        with:
+#          go-version: 1.17
+
+#      - id: build-go
+#        name: Build Go
+#        run: CGO_ENABLED=0 go build -o server main.go
 
   buid-push-docker:
     name: Build and push Docker
-    needs: build-go
+    needs: build
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@f052436db5f344c55c3f42b55cc2f750cfa91416
     with:
       imageName: argocd-app
