@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
 
-env:
-  DOCKER_IMAGE_VERSION: ${{ github.sha }}
-
 jobs:
   build-go:
     name: Build Go aplication
@@ -56,7 +53,7 @@ jobs:
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@418a24a209b7885cc6d9eab1e395f4cb643f8d78
     with:
       imageName: argocd-app
-      imageVersion: ${{ DOCKER_IMAGE_VERSION }}
+      imageVersion: ${{ github.sha }}
       builtFile: server
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
@@ -75,12 +72,12 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
-      - run: echo Docker image version is $DOCKER_IMAGE_VERSION
+      - run: echo Docker image version is ${{ github.sha }}
 
       - name: Update k8s
         run: |
           cd k8s
-          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ DOCKER_IMAGE_VERSION }}
+          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ github.sha }}
 
       - name: Commit
         run: |
