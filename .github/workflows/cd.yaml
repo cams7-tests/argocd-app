@@ -21,19 +21,19 @@ jobs:
 #        env:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-
-      - id: build-and-push-docker-image
-        name: Build and push Docker image 
-        uses: ./.github/workflows/build-push-docker.yaml@978caf1795b024cb21e9a85e6981a2b7d9902bed
-        with:
-          imageName: argocd-app
-          username: ${{ secrets.NEXUS_USERNAME }}
-          password: ${{ secrets.NEXUS_TOKEN }}
+  buid-and-push-docker-image:
+    needs: build
+    uses: ./.github/workflows/build-push-docker.yaml@978caf1795b024cb21e9a85e6981a2b7d9902bed
+    with:
+      imageName: argocd-app
+    secrets:
+      username: ${{ secrets.NEXUS_USERNAME }}
+      password: ${{ secrets.NEXUS_TOKEN }}
 
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: build
+    needs: buid-and-push-docker-image
     steps:
       - name: Checkout
         uses: actions/checkout@v2
