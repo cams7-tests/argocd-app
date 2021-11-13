@@ -10,9 +10,8 @@ on:
         required: true
         type: string
       dockerContext:
-        required: false
-        type: string
-        default: ${{ github.workspace }}      
+        required: true
+        type: string     
     secrets:
       nexusUsername:
         required: true
