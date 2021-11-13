@@ -37,7 +37,7 @@ jobs:
   buid-push-docker:
     name: Build and push Docker
     needs: build-go
-    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@17e2c802f8fdc179823e6e0c197dd584a7c6f393
+    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@f052436db5f344c55c3f42b55cc2f750cfa91416
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
@@ -48,7 +48,7 @@ jobs:
   update-kustomize:
     name: Update Kustomize
     needs: buid-push-docker
-    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@17e2c802f8fdc179823e6e0c197dd584a7c6f393
+    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@f052436db5f344c55c3f42b55cc2f750cfa91416
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
