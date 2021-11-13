@@ -34,6 +34,8 @@ jobs:
         name: Build Go
         run: CGO_ENABLED=0 go build -o server main.go
 
+      - run : echo ${{ github.workspace }}
+
   buid-push-docker:
     name: Build and push Docker
     needs: build-go
@@ -52,4 +54,4 @@ jobs:
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
-      kustomizePath: ${{ runner.workspace }}/k8s
+      kustomizePath: ${{ github.workspace }}/k8s
