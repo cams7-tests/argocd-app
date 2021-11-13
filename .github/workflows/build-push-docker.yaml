@@ -23,27 +23,19 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
+      - name: List files in the repository before checkout
+        shell: bash
+        run: |
+          ls -hal ${{ github.workspace }}
+
       - id: checkout
         name: Checkout
         uses: actions/checkout@v2
 
-      - name: List files in the workspace
+      - name: List files in the repository before download
         shell: bash
         run: |
-          pwd 
-          ls -hal ${{ runner.workspace }}
-
-      - name: List files in the temp
-        shell: bash
-        run: |
-          pwd 
-          ls -hal ${{ runner.temp }}
-
-      - name: List files in the cache
-        shell: bash
-        run: |
-          pwd 
-          ls -hal ${{ runner.tool_cache }}
+          ls -hal ${{ github.workspace }}
           
       - id: download-build-file
         name: Download built file
