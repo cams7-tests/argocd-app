@@ -1,0 +1,34 @@
+name: 'Buid Go application'
+
+description: 'Buid Go application'
+
+inputs:
+  built-file: 
+    description: 'Built file'
+    required: true
+  go-file: 
+    description: 'Go file'
+    required: true
+  go-version: 
+    description: 'Go version'
+    required: false
+    default: "1.17"
+outputs:
+  status:
+    description: "Status"
+    value: ${{ steps['build-go'].outputs.status }}
+runs:
+  using: "composite"
+  steps:
+    - id: setup-up-go
+      name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ inputs['go-version'] }}
+
+    - id: build-go
+      name: Build Go
+      shell: bash
+      run: |
+        CGO_ENABLED=0 go build -o ${{ inputs['built-file'] }} ${{ inputs['go-file'] }}
+        echo "::set-output name=status::built-file"
