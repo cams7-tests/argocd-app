@@ -27,7 +27,7 @@ jobs:
 
       - id: build-go
         name: Build Go
-        uses: ./.github/workflows/build-go/
+        uses: cams7-tests/argocd-app/.github/workflows/build-go@8efe72ca015fe0b1722cd23271fb52480968cf89
         with:
           built-file: server
           go-file: main.go
