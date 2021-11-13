@@ -23,7 +23,7 @@ jobs:
 
   buid-and-push-docker-image:
     needs: build
-    uses: ./.github/workflows/build-push-docker.yaml@978caf1795b024cb21e9a85e6981a2b7d9902bed
+    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@978caf1795b024cb21e9a85e6981a2b7d9902bed
     with:
       imageName: argocd-app
     secrets:
