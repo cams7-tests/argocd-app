@@ -41,8 +41,6 @@ jobs:
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
-      dockerContext: ${{ github.workspace }}
-      appInfo: "JSON_SECRET={\"appName\":\"argocd-app\",\"generatedFile\":\"server\"}"
     secrets:
       nexusUsername: ${{ secrets.NEXUS_USERNAME }}
       nexusPassword: ${{ secrets.NEXUS_TOKEN }}

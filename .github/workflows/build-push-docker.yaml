@@ -27,6 +27,8 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
+      - run: echo Docker context is  ${{ inputs.dockerContext }}
+
       - id: set-up-qemu
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -49,7 +51,6 @@ jobs:
         with:
           context: ${{ github.workspace }}
           push: true
-          secrets: ${{ inputs.appInfo }}
           tags: |
             private.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }} 
             private.nexus.cams7.ml/${{ inputs.imageName }}:latest
