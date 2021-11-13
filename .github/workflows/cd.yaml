@@ -14,9 +14,9 @@ jobs:
           APP_VERSION: ${{ github.sha }}
         run: echo "Docker image version is $APP_VERSION"
 
-      - env:
-          APP_VERSION: ${{ github.sha }}
-        run: echo "Docker image version is ${{ echo APP_VERSION }}"
+#      - env:
+#          APP_VERSION: ${{ github.sha }}
+#        run: echo "Docker image version is ${{ echo APP_VERSION }}"
 
       - id: checkout
         name: Checkout
