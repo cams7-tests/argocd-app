@@ -65,20 +65,20 @@ jobs:
 #          echo  ${{ runner.tool_cache }} 
 #          ls -hal ${{ runner.tool_cache }}
           
-      - name: Upload built file
-        uses: actions/upload-artifact@v2
-        with:
-          name: server
-          path: server   
+#      - name: Upload built file
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: server
+#          path: server   
 
   buid-push-docker:
     name: Build and push Docker image
     needs: build-go
-    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@b2a7fddbdbcabbed0e1ea09222b9ea36c7d8e77e
+    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@95b67cc9be201aa64e01523513e93bc79268f63f
     with:
       imageName: argocd-app
-      imageVersion: ${{ github.sha }}
-      builtFile: server
+#      imageVersion: ${{ github.sha }}
+#      builtFile: server
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
       password: ${{ secrets.NEXUS_TOKEN }}
