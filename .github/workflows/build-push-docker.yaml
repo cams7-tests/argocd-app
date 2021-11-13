@@ -6,9 +6,12 @@ on:
       imageName:
         required: true
         type: string
-#      builtFile:
-#        required: true
-#        type: string
+      imageVersion:
+        required: true
+        type: string
+      builtFile:
+        required: true
+        type: string
     secrets:
       username:
         required: true
@@ -20,20 +23,20 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
-      - id: chechout
-        name: Checkout
-        uses: actions/checkout@v2
+#      - id: chechout
+#        name: Checkout
+#        uses: actions/checkout@v2
 
-#      - name: List files in the repository before download
-#        shell: bash
-#        run: |
-#          ls -hal ${{ github.workspace }}
+      - name: List files in the repository before download
+        shell: bash
+        run: |
+          ls -hal ${{ github.workspace }}
           
-#      - id: download-build-file
-#        name: Download built file
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: builtFile
+      - id: download-build-file
+        name: Download built file
+        uses: actions/download-artifact@v2
+        with:
+          name: builtFile
           
       - name: List files in the repository after download
         shell: bash
@@ -62,5 +65,5 @@ jobs:
         with:
           push: true
           tags: |
-            private.nexus.cams7.ml/${{ inputs.imageName }}:${{ github.sha }} 
+            private.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }} 
             private.nexus.cams7.ml/${{ inputs.imageName }}:latest

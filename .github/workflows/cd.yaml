@@ -39,11 +39,11 @@ jobs:
         run: |
           ls -hal ${{ github.workspace }}
           
-#      - name: Upload built file
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: go-built-file
-#          path: server   
+      - name: Upload built file
+        uses: actions/upload-artifact@v2
+        with:
+          name: go-built-file
+          path: server   
 
   buid-push-docker:
     name: Build and push Docker image
@@ -51,6 +51,7 @@ jobs:
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@2a2fdd2a1206860293afa15d9d15a30545eb562c
     with:
       imageName: argocd-app
+#      imageVersion: ${{ github.sha }}
 #      builtFile: go-built-file
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
