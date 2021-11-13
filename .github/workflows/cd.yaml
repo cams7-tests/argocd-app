@@ -35,7 +35,7 @@ jobs:
         run: CGO_ENABLED=0 go build -o server main.go
 
   buid-push-docker:
-    name: Build and push Docker image
+    name: Build and push Docker
     needs: build-go
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@ce725f6e9c2176d0cc363712f43befb574c22578
     with:
@@ -45,11 +45,11 @@ jobs:
       nexusUsername: ${{ secrets.NEXUS_USERNAME }}
       nexusPassword: ${{ secrets.NEXUS_TOKEN }}
 
-  deploy:
-    name: Deploy
+  update-image-kustomize:
+    name: Update image on Kustomize
     needs: buid-push-docker
     uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@e7e9a45bc9393e52542947a5093bb9e75194ec39
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
-      kustomizePath: k8s
+      kustomizePath: ${{ github.workspace }}/k8s
