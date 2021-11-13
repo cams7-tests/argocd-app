@@ -6,12 +6,12 @@ on:
       imageName:
         required: true
         type: string
-      imageVersion:
-        required: true
-        type: string
-      builtFile:
-        required: true
-        type: string
+#      imageVersion:
+#        required: true
+#        type: string
+#      builtFile:
+#        required: true
+#        type: string
     secrets:
       username:
         required: true
@@ -23,30 +23,30 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
-      - name: List files in the repository before checkout
+      - name: List files in the workspace
         shell: bash
         run: |
           ls -hal ${{ github.workspace }}
 
-      - id: checkout
-        name: Checkout
-        uses: actions/checkout@v2
+#      - id: checkout
+#        name: Checkout
+#        uses: actions/checkout@v2
 
-      - name: List files in the repository before download
-        shell: bash
-        run: |
-          ls -hal ${{ github.workspace }}
+#      - name: List files in the repository before download
+#        shell: bash
+#        run: |
+#          ls -hal ${{ github.workspace }}
           
-      - id: download-build-file
-        name: Download built file
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ inputs.builtFile }} 
+#      - id: download-build-file
+#        name: Download built file
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: ${{ inputs.builtFile }} 
           
-      - name: List files in the repository after download
-        shell: bash
-        run: |
-          ls -hal ${{ github.workspace }}
+#      - name: List files in the repository after download
+#        shell: bash
+#        run: |
+#          ls -hal ${{ github.workspace }}
 
       - id: set-up-qemu
         name: Set up QEMU
@@ -64,7 +64,7 @@ jobs:
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
 
-      - run: echo Docker image version is ${{ inputs.imageVersion }}
+      - run: echo Docker image version is ${{ github.sha }}
       
       - id: build-and-push
         name: Build and push
@@ -73,10 +73,10 @@ jobs:
           context: ${{ github.workspace }}
           push: true
           tags: |
-            private.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }} 
+            private.nexus.cams7.ml/${{ inputs.imageName }}:${{ github.sha }} 
             private.nexus.cams7.ml/${{ inputs.imageName }}:latest
 
-      - id: remove-built-file
-        name: Remove built file
-        shell: bash
-        run: rm ${{ inputs.builtFile }}
+#      - id: remove-built-file
+#        name: Remove built file
+#        shell: bash
+#        run: rm ${{ inputs.builtFile }}

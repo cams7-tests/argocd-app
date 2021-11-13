@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
 
-env:
-  APP_VERSION: ${{ github.sha }}
+#env:
+#  APP_VERSION: ${{ github.sha }}
 
 jobs:
   build-go:
@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted   
     
     steps:
-      - run: echo "Docker image version is ${{ env.APP_VERSION }}"
+      - run: echo "Docker image version is ${{ github.sha }}"
 
 #      - env:
 #          APP_VERSION: ${{ github.sha }}
@@ -46,24 +46,24 @@ jobs:
 #      - name: Test
 #        run: go test -v ./...
 
-      - name: List files in the workspace
-        shell: bash
-        run: |
-          echo ${{ runner.workspace }} 
-          ls -hal ${{ runner.workspace }}/argocd-app
+#      - name: List files in the workspace
+#        shell: bash
+#        run: |
+#          echo ${{ runner.workspace }} 
+#          ls -hal ${{ runner.workspace }}/argocd-app
 
-      - name: List files in the temp
-        shell: bash
-        run: |
-          echo ${{ runner.temp }} 
-          ls -hal ${{ runner.temp }}/_github_workflow
-          ls -hal ${{ runner.temp }}/_runner_file_commands
+#      - name: List files in the temp
+#        shell: bash
+#        run: |
+#          echo ${{ runner.temp }} 
+#          ls -hal ${{ runner.temp }}/_github_workflow
+#          ls -hal ${{ runner.temp }}/_runner_file_commands
 
-      - name: List files in the cache
-        shell: bash
-        run: |
-          echo  ${{ runner.tool_cache }} 
-          ls -hal ${{ runner.tool_cache }}
+#      - name: List files in the cache
+#        shell: bash
+#        run: |
+#          echo  ${{ runner.tool_cache }} 
+#          ls -hal ${{ runner.tool_cache }}
           
       - name: Upload built file
         uses: actions/upload-artifact@v2
@@ -96,12 +96,12 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
-      - run: echo Docker image version is ${{ env.APP_VERSION }}
+      - run: echo Docker image version is ${{ github.sha }}
 
       - name: Update k8s
         run: |
           cd k8s
-          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ env.APP_VERSION }}
+          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ github.sha }}
 
       - name: Commit
         run: |
