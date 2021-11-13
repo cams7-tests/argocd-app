@@ -1,7 +1,12 @@
-name: CD
+name: Continuous delivery
+
 on:
   push:
     branches: [main]
+
+env:
+  DOCKER_IMAGE_VERSION: ${{ github.sha }}
+
 jobs:
   build-go:
     name: Build Go aplication
@@ -42,7 +47,7 @@ jobs:
       - name: Upload built file
         uses: actions/upload-artifact@v2
         with:
-          name: go-built-file
+          name: server
           path: server   
 
   buid-push-docker:
@@ -51,8 +56,8 @@ jobs:
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@4ced63b558bad6a5238d73a86adc57ea5dbf7263
     with:
       imageName: argocd-app
-      imageVersion: ${{ github.sha }}
-      builtFile: go-built-file
+      imageVersion: $DOCKER_IMAGE_VERSION
+      builtFile: server
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
       password: ${{ secrets.NEXUS_TOKEN }}
@@ -70,10 +75,12 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
+      - run: echo Docker image version is $DOCKER_IMAGE_VERSION
+
       - name: Update k8s
         run: |
           cd k8s
-          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ github.sha }}
+          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:$DOCKER_IMAGE_VERSION
 
       - name: Commit
         run: |

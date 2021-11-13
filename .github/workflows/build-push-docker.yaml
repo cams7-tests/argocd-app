@@ -54,6 +54,8 @@ jobs:
           registry: private.nexus.cams7.ml
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
+
+      - run: echo Docker image version is ${{ inputs.imageVersion }}
       
       - id: build-and-push
         name: Build and push
@@ -63,3 +65,8 @@ jobs:
           tags: |
             private.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }} 
             private.nexus.cams7.ml/${{ inputs.imageName }}:latest
+
+      - id: remove-built-file
+        name: Remove built file
+        shell: bash
+        run: rm ${{ inputs.builtFile }}
