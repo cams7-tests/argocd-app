@@ -4,13 +4,14 @@ on:
   push:
     branches: [main]
 
-env:
-  DOCKER_IMAGE_VERSION: ${{ github.sha }}
-
 jobs:
   build-go:
     name: Build Go aplication
     runs-on: self-hosted
+
+    env:
+      DOCKER_IMAGE_VERSION: ${{ github.sha }}
+    
     steps:
       - run: echo "Docker image version is $DOCKER_IMAGE_VERSION"
 
