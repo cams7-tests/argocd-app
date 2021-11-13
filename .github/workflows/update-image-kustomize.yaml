@@ -10,8 +10,9 @@ on:
         required: true
         type: string
       kustomizePath:
-        required: true
+        required: false
         type: string  
+        default: ""
       gitEmail:
         required: false
         type: string  
@@ -27,25 +28,17 @@ on:
 
 jobs:
   update-kustomize:
-    name: Update Docker image on Kustomize
+    name: Update Kustomize
     runs-on: self-hosted
     steps:
-      - run: |
-          echo imageName is ${{ inputs.imageName }}
-          echo imageVersion is ${{ inputs.imageVersion }}
-          echo kustomizePath is ${{ inputs.kustomizePath }}
-          echo gitEmail is ${{ inputs.gitEmail }}
-          echo gitUsername is ${{ inputs.gitUsername }}
-          echo gitCommitMessage is ${{ inputs.gitCommitMessage }}
-
-      - id: kustomize
-        name: Kustomize
+      - id: setup-kustomize
+        name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: v3.6.1
 
-      - id: update-kustomize-file
-        name: Update Kustomize file
+      - id: update-kustomize
+        name: Update Kustomize
         run: |
           cd ${{ github.workspace }}/${{ inputs.kustomizePath }}
           kustomize edit set image public.nexus.cams7.ml/${{ inputs.imageName }}=public.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }}

@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-go:
-    name: Build Go aplication
+    name: Build Go
     runs-on: self-hosted   
     
     steps:
@@ -34,8 +34,6 @@ jobs:
         name: Build Go
         run: CGO_ENABLED=0 go build -o server main.go
 
-      - run : echo ${{ github.workspace }}
-
   buid-push-docker:
     name: Build and push Docker
     needs: build-go
@@ -47,8 +45,8 @@ jobs:
       nexusUsername: ${{ secrets.NEXUS_USERNAME }}
       nexusPassword: ${{ secrets.NEXUS_TOKEN }}
 
-  update-image-kustomize:
-    name: Update image on Kustomize
+  update-kustomize:
+    name: Update Kustomize
     needs: buid-push-docker
     uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@17e2c802f8fdc179823e6e0c197dd584a7c6f393
     with:
