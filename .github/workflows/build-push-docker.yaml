@@ -27,10 +27,23 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
 
-      - name: List files in the repository before download
+      - name: List files in the workspace
         shell: bash
         run: |
-          ls -hal ${{ github.workspace }}
+          pwd 
+          ls -hal ${{ runner.workspace }}
+
+      - name: List files in the temp
+        shell: bash
+        run: |
+          pwd 
+          ls -hal ${{ runner.temp }}
+
+      - name: List files in the cache
+        shell: bash
+        run: |
+          pwd 
+          ls -hal ${{ runner.tool_cache }}
           
       - id: download-build-file
         name: Download built file

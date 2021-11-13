@@ -4,11 +4,18 @@ on:
   push:
     branches: [main]
 
+env:
+  DOCKER_IMAGE_VERSION: ${{ github.sha }}
+
 jobs:
   build-go:
     name: Build Go aplication
     runs-on: self-hosted
     steps:
+      - run: echo "Docker image version is $DOCKER_IMAGE_VERSION"
+
+      - run: echo "Docker image version is ${{ $DOCKER_IMAGE_VERSION }}"
+
       - id: checkout
         name: Checkout
         uses: actions/checkout@v2
@@ -36,10 +43,23 @@ jobs:
 #      - name: Test
 #        run: go test -v ./...
 
-      - name: List files in the repository
+      - name: List files in the workspace
         shell: bash
         run: |
-          ls -hal ${{ github.workspace }}
+          pwd 
+          ls -hal ${{ runner.workspace }}
+
+      - name: List files in the temp
+        shell: bash
+        run: |
+          pwd 
+          ls -hal ${{ runner.temp }}
+
+      - name: List files in the cache
+        shell: bash
+        run: |
+          pwd 
+          ls -hal ${{ runner.tool_cache }}
           
       - name: Upload built file
         uses: actions/upload-artifact@v2
