@@ -77,7 +77,7 @@ jobs:
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@b2a7fddbdbcabbed0e1ea09222b9ea36c7d8e77e
     with:
       imageName: argocd-app
-      imageVersion: ${{ env.APP_VERSION }}
+      imageVersion: ${{ github.sha }}
       builtFile: server
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
