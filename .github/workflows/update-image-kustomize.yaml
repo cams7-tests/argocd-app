@@ -29,7 +29,6 @@ jobs:
   update-kustomize:
     name: Update Docker image on Kustomize
     runs-on: self-hosted
-    needs: buid-push-docker
     steps:
       - run: |
           echo imageName is ${{ inputs.imageName }}
