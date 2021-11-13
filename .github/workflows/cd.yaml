@@ -7,15 +7,16 @@ on:
 jobs:
   build-go:
     name: Build Go aplication
-    runs-on: self-hosted
-
-    env:
-      DOCKER_IMAGE_VERSION: ${{ github.sha }}
+    runs-on: self-hosted   
     
     steps:
-      - run: echo "Docker image version is $DOCKER_IMAGE_VERSION"
+      - env:
+          DOCKER_IMAGE_VERSION: ${{ github.sha }}
+        run: echo "Docker image version is $DOCKER_IMAGE_VERSION"
 
-      - run: echo "Docker image version is ${{ $DOCKER_IMAGE_VERSION }}"
+      - env:
+          DOCKER_IMAGE_VERSION: ${{ github.sha }}
+        run: echo "Docker image version is ${{ $DOCKER_IMAGE_VERSION }}"
 
       - id: checkout
         name: Checkout
