@@ -17,4 +17,4 @@ namePrefix: argocd-app-
 images:
 - name: public.nexus.cams7.ml/argocd-app
   newName: public.nexus.cams7.ml/argocd-app
-  newTag: 2407dc24c534e341d94744080b08fec98a25f815
+  newTag: 4cd4cbed2a122ab16be2d56467436fd067af947c
