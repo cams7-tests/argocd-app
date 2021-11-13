@@ -54,4 +54,4 @@ jobs:
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
-      kustomizePath: ${{ github.workspace }}/k8s
+      kustomizePath: k8s

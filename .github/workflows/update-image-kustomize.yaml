@@ -47,7 +47,7 @@ jobs:
       - id: update-kustomize-file
         name: Update Kustomize file
         run: |
-          cd ${{ inputs.kustomizePath }}
+          cd ${{ github.workspace }}/${{ inputs.kustomizePath }}
           kustomize edit set image public.nexus.cams7.ml/${{ inputs.imageName }}=public.nexus.cams7.ml/${{ inputs.imageName }}:${{ inputs.imageVersion }}
 
       - id: commit
