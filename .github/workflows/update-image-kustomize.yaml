@@ -24,11 +24,6 @@ on:
         required: false
         type: string  
         default: "Change image tag"
-    secrets:
-      nexusUsername:
-        required: true
-      nexusPassword:
-        required: true
 
 jobs:
   update-kustomize:
