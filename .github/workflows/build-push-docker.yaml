@@ -23,7 +23,7 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
-      - run: echo Docker context is  ${{ inputs.dockerContext }}
+      - run: echo "Docker context is ${{ inputs.dockerContext }}"
 
       - id: set-up-qemu
         name: Set up QEMU
