@@ -23,6 +23,10 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v2
+
       - name: List files in the repository before download
         shell: bash
         run: |
