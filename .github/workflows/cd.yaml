@@ -27,7 +27,7 @@ jobs:
 
       - id: build-go
         name: Build Go
-        uses: cams7-tests/argocd-app/build-go@8efe72ca015fe0b1722cd23271fb52480968cf89
+        uses: cams7-tests/argocd-app/build-go@8b88df1a6f7789b4904c1ed5385ba81b79b51df7
         with:
           built-file: server
           go-file: main.go
