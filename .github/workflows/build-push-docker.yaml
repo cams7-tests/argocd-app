@@ -6,6 +6,9 @@ on:
       imageName:
         required: true
         type: string
+      builtFile:
+        required: true
+        type: string
     secrets:
       username:
         required: true
@@ -17,6 +20,22 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
+      - name: List files in the repository before download
+        shell: bash
+        run: |
+          ls -hal ${{ github.workspace }}
+          
+      - id: download-build-file
+        name: Download built file
+        uses: actions/download-artifact@v2
+        with:
+          name: builtFile
+          
+      - name: List files in the repository after download
+        shell: bash
+        run: |
+          ls -hal ${{ github.workspace }}
+
       - id: set-up-qemu
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1

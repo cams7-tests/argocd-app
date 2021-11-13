@@ -3,8 +3,8 @@ on:
   push:
     branches: [main]
 jobs:
-  build:
-    name: Build
+  build-go:
+    name: Build Go aplication
     runs-on: self-hosted
     steps:
       - id: checkout
@@ -21,11 +21,37 @@ jobs:
 #        env:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  buid-and-push-docker-image:
-    needs: build
+      - id: setup-up-go
+        name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - id: build-go
+        name: Build Go
+        run: CGO_ENABLED=0 go build -o server main.go
+
+#      - name: Test
+#        run: go test -v ./...
+
+      - name: List files in the repository
+        shell: bash
+        run: |
+          ls -hal ${{ github.workspace }}
+          
+      - name: Upload built file
+        uses: actions/upload-artifact@v2
+        with:
+          name: go-built-file
+          path: server   
+
+  buid-push-docker:
+    name: Build and push Docker image
+    needs: build-go
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@978caf1795b024cb21e9a85e6981a2b7d9902bed
     with:
       imageName: argocd-app
+#      builtFile: go-built-file
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
       password: ${{ secrets.NEXUS_TOKEN }}
@@ -33,7 +59,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: buid-and-push-docker-image
+    needs: buid-push-docker
     steps:
       - name: Checkout
         uses: actions/checkout@v2
