@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted   
     
     steps:
-      - run: echo "Docker image version is $APP_VERSION"
+      - run: echo "Docker image version is ${{ env.APP_VERSION }}"
 
 #      - env:
 #          APP_VERSION: ${{ github.sha }}
@@ -74,7 +74,7 @@ jobs:
   buid-push-docker:
     name: Build and push Docker image
     needs: build-go
-    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@418a24a209b7885cc6d9eab1e395f4cb643f8d78
+    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@e43da45de9d5a96e33927d150e38088bfba4d3c0
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
