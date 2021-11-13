@@ -37,7 +37,7 @@ jobs:
   buid-push-docker:
     name: Build and push Docker image
     needs: build-go
-    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@0c5012185f3fa3bed58676d9fd4ee64b277f3fa0
+    uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@ce725f6e9c2176d0cc363712f43befb574c22578
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
