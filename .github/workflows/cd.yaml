@@ -4,21 +4,12 @@ on:
   push:
     branches: [main]
 
-#env:
-#  APP_VERSION: ${{ github.sha }}
-
 jobs:
   build-go:
     name: Build Go aplication
     runs-on: self-hosted   
     
     steps:
-      - run: echo "Docker image version is ${{ github.sha }}"
-
-#      - env:
-#          APP_VERSION: ${{ github.sha }}
-#        run: echo "Docker image version is ${{ echo APP_VERSION }}"
-
       - id: checkout
         name: Checkout
         uses: actions/checkout@v2
@@ -43,45 +34,17 @@ jobs:
         name: Build Go
         run: CGO_ENABLED=0 go build -o server main.go
 
-#      - name: Test
-#        run: go test -v ./...
-
-#      - name: List files in the workspace
-#        shell: bash
-#        run: |
-#          echo ${{ runner.workspace }} 
-#          ls -hal ${{ runner.workspace }}/argocd-app
-
-#      - name: List files in the temp
-#        shell: bash
-#        run: |
-#          echo ${{ runner.temp }} 
-#          ls -hal ${{ runner.temp }}/_github_workflow
-#          ls -hal ${{ runner.temp }}/_runner_file_commands
-
-#      - name: List files in the cache
-#        shell: bash
-#        run: |
-#          echo  ${{ runner.tool_cache }} 
-#          ls -hal ${{ runner.tool_cache }}
-          
-#      - name: Upload built file
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: server
-#          path: server   
-
   buid-push-docker:
     name: Build and push Docker image
     needs: build-go
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@95b67cc9be201aa64e01523513e93bc79268f63f
     with:
       imageName: argocd-app
-#      imageVersion: ${{ github.sha }}
-#      builtFile: server
+      imageVersion: ${{ github.sha }}
+      appInfo: "JSON_SECRET={\"appName\":\"argocd-app\",\"generatedFile\":\"server\"}"
     secrets:
-      username: ${{ secrets.NEXUS_USERNAME }}
-      password: ${{ secrets.NEXUS_TOKEN }}
+      nexusUsername: ${{ secrets.NEXUS_USERNAME }}
+      nexusPassword: ${{ secrets.NEXUS_TOKEN }}
 
   deploy:
     name: Deploy
@@ -95,8 +58,6 @@ jobs:
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: v3.6.1
-
-      - run: echo Docker image version is ${{ github.sha }}
 
       - name: Update k8s
         run: |
