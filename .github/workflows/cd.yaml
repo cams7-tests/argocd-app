@@ -77,7 +77,7 @@ jobs:
     uses: cams7-tests/argocd-app/.github/workflows/build-push-docker.yaml@07f02df205129d4e9e3134793a04c86d712b1b18
     with:
       imageName: argocd-app
-      imageVersion: ${{ github.sha }}
+      imageVersion: ${{ env.APP_VERSION }}
       builtFile: server
     secrets:
       username: ${{ secrets.NEXUS_USERNAME }}
@@ -96,12 +96,12 @@ jobs:
         with:
           kustomize-version: v3.6.1
 
-      - run: echo Docker image version is ${{ github.sha }}
+      - run: echo Docker image version is ${{ env.APP_VERSION }}
 
       - name: Update k8s
         run: |
           cd k8s
-          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ github.sha }}
+          kustomize edit set image public.nexus.cams7.ml/argocd-app=public.nexus.cams7.ml/argocd-app:${{ env.APP_VERSION }}
 
       - name: Commit
         run: |
