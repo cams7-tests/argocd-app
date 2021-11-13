@@ -50,7 +50,7 @@ jobs:
   update-image-kustomize:
     name: Update image on Kustomize
     needs: buid-push-docker
-    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@e7e9a45bc9393e52542947a5093bb9e75194ec39
+    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@17e2c802f8fdc179823e6e0c197dd584a7c6f393
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
