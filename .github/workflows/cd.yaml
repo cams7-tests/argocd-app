@@ -4,15 +4,16 @@ on:
   push:
     branches: [main]
 
+env:
+  APP_VERSION: ${{ github.sha }}
+
 jobs:
   build-go:
     name: Build Go aplication
     runs-on: self-hosted   
     
     steps:
-      - env:
-          APP_VERSION: ${{ github.sha }}
-        run: echo "Docker image version is $APP_VERSION"
+      - run: echo "Docker image version is $APP_VERSION"
 
 #      - env:
 #          APP_VERSION: ${{ github.sha }}
@@ -48,19 +49,20 @@ jobs:
       - name: List files in the workspace
         shell: bash
         run: |
-          pwd 
-          ls -hal ${{ runner.workspace }}
+          echo ${{ runner.workspace }} 
+          ls -hal ${{ runner.workspace }}/argocd-app
 
       - name: List files in the temp
         shell: bash
         run: |
-          pwd 
-          ls -hal ${{ runner.temp }}
+          echo ${{ runner.temp }} 
+          ls -hal ${{ runner.temp }}/_github_workflow
+          ls -hal ${{ runner.temp }}/_runner_file_commands
 
       - name: List files in the cache
         shell: bash
         run: |
-          pwd 
+          echo  ${{ runner.tool_cache }} 
           ls -hal ${{ runner.tool_cache }}
           
       - name: Upload built file
