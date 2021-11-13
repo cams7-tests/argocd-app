@@ -8,10 +8,7 @@ on:
         type: string
       imageVersion:
         required: true
-        type: string
-      dockerContext:
-        required: true
-        type: string     
+        type: string  
     secrets:
       nexusUsername:
         required: true
@@ -23,8 +20,6 @@ jobs:
     name: Build and push
     runs-on: self-hosted
     steps:
-      - run: echo "Docker context is ${{ inputs.dockerContext }}"
-
       - id: set-up-qemu
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
