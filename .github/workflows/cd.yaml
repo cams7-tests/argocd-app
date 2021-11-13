@@ -39,11 +39,11 @@ jobs:
         run: |
           ls -hal ${{ github.workspace }}
           
-      - name: Upload built file
-        uses: actions/upload-artifact@v2
-        with:
-          name: go-built-file
-          path: server   
+#      - name: Upload built file
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: go-built-file
+#          path: server   
 
   buid-push-docker:
     name: Build and push Docker image
