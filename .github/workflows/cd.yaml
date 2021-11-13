@@ -48,7 +48,7 @@ jobs:
   deploy:
     name: Deploy
     needs: buid-push-docker
-    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@dd19b34d10ad4a614dab55302f34c8c96a64c368
+    uses: cams7-tests/argocd-app/.github/workflows/update-image-kustomize.yaml@c3b5429d5012f2f38d72aed4291f7c8cb7b2672d
     with:
       imageName: argocd-app
       imageVersion: ${{ github.sha }}
